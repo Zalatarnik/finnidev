@@ -1,0 +1,23 @@
+/[L|l]ibrary/
+/[T|t]emp/
+/[O|o]bj/
+/[B|b]uild/
+/[B|b]uilds/
+/[L|l]ogs/
+/[U|u]ser[S|s]ettings/
+
+# Отклоняем временные файлы операционных систем и редакторов
+.DS_Store
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svntmp
+
+# Исключаем кэш и папки сборки WebGL
+Assets/AssetStoreTools*
