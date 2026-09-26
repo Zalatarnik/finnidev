@@ -1,0 +1,132 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4746812910322293644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1628005173027683187}
+  - component: {fileID: 1114854218492087193}
+  m_Layer: 0
+  m_Name: _GM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1628005173027683187
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4746812910322293644}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 877.62823, y: 1586.0903, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1114854218492087193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4746812910322293644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce21c71dc0b9f1a4288629da835fcc2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameFlowManager
+  characterSelectPanel: {fileID: 0}
+  prologuePanel: {fileID: 0}
+  dialogPanel: {fileID: 0}
+  gamePanel: {fileID: 0}
+  locationSelectPanel: {fileID: 0}
+  bodyLayerDisplay: {fileID: 0}
+  clothingLayerDisplay: {fileID: 0}
+  hornsLayerDisplay: {fileID: 0}
+  bodySprites:
+  - {fileID: -1880120661550918566, guid: 55c4e41ac9f76ef42baf6de4f15c6f78, type: 3}
+  - {fileID: 3948609945394740131, guid: 55c4e41ac9f76ef42baf6de4f15c6f78, type: 3}
+  - {fileID: -699401053079628400, guid: 55c4e41ac9f76ef42baf6de4f15c6f78, type: 3}
+  - {fileID: -2138889809964615276, guid: 55c4e41ac9f76ef42baf6de4f15c6f78, type: 3}
+  clothingSprites:
+  - {fileID: -704696203469421828, guid: 88659e79c51ffcf48b7093ee9a534ffc, type: 3}
+  - {fileID: -1316544701606334742, guid: 88659e79c51ffcf48b7093ee9a534ffc, type: 3}
+  - {fileID: 3399729061707091439, guid: 88659e79c51ffcf48b7093ee9a534ffc, type: 3}
+  - {fileID: -2261297698395087959, guid: 88659e79c51ffcf48b7093ee9a534ffc, type: 3}
+  hornsSprites:
+  - {fileID: 6831547869569991438, guid: 57280b573df80954eb649545c448190d, type: 3}
+  - {fileID: 8932762820470935353, guid: 57280b573df80954eb649545c448190d, type: 3}
+  - {fileID: -8249263679200220613, guid: 57280b573df80954eb649545c448190d, type: 3}
+  - {fileID: 211829431994966641, guid: 57280b573df80954eb649545c448190d, type: 3}
+  currentImageRect: {fileID: 0}
+  nextImageRect: {fileID: 0}
+  prologueSprites:
+  - {fileID: 1564718078589301607, guid: 5ad93e3d277302246bcf965f873d2005, type: 3}
+  - {fileID: -4061636767190851948, guid: fc583db9b323c0f4f83d617780402942, type: 3}
+  - {fileID: -2184086345217378606, guid: 67433f8ea55229c418b8da5a419944df, type: 3}
+  - {fileID: 5147821132119671424, guid: f5398796161afec40b4fd43094201b99, type: 3}
+  - {fileID: 2516176938745974243, guid: b072d0bbd93b7844fb0a56bdbacd1e62, type: 3}
+  - {fileID: 3680644420722855679, guid: abc73637e44f8694e8600fa21deab050, type: 3}
+  textCanvasGroup: {fileID: 0}
+  textImageComponent: {fileID: 0}
+  textSprites:
+  - {fileID: 0}
+  - {fileID: 5398247336827757427, guid: 503966733219b9d4299a058933ae92e0, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 538873063097352684, guid: 89fee24c048e0464e9951b4b00fd11e1, type: 3}
+  - {fileID: -8607005669353761045, guid: 6aec4d02091539a418e406e348ebc9b6, type: 3}
+  textTemplates:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  textFlyDuration: 0.5
+  timePerImage: 5
+  transitionDuration: 0.2
+  slideDistance: 1920
+  distortionAmount: 4
+  dialogCharacterImage: {fileID: 0}
+  dialogBoxImage: {fileID: 0}
+  dialogTextComponent: {fileID: 0}
+  textTypingSpeed: 0.03
+  dialogLines:
+  - characterSprite: {fileID: -6651285785684280604, guid: 6c4e1c9fbb2422441841b9e8a88e84f1, type: 3}
+    dialogBoxSprite: {fileID: 7669455987791779220, guid: bbf55e4231037804db49b295bd04f9b1, type: 3}
+    dialogText: "\u0427\u0442\u043E \u0437\u0430 \u044F\u0440\u043A\u0438\u0439 \u0441\u0432\u0435\u0442?"
+  - characterSprite: {fileID: -6651285785684280604, guid: 6c4e1c9fbb2422441841b9e8a88e84f1, type: 3}
+    dialogBoxSprite: {fileID: 7669455987791779220, guid: bbf55e4231037804db49b295bd04f9b1, type: 3}
+    dialogText: "\u0410\u0430\u0430!? \u0422\u044B \u043A\u0442\u043E \u0442\u0430\u043A\u043E\u0439??? \u0422\u044B \u043E\u0442\u043A\u0443\u0434\u0430 \u0432\u0437\u044F\u043B\u0441\u044F?"
+  - characterSprite: {fileID: 2829232388215122354, guid: aeefdf49213eb6449a29c14125515503, type: 3}
+    dialogBoxSprite: {fileID: 2317827250201692963, guid: a8ada16681e5bcc4ab560ea723c0c69f, type: 3}
+    dialogText: "\u0424\u0438\u043D\u043D\u0438 \u0444\u0438-\u0440\u0438-\u0440\u0438! \u0424\u0438 \u0440\u0430 \u043D\u0438-\u0440\u0438..."
+  - characterSprite: {fileID: 2785550544401906418, guid: 505ef160423e6274c8bfc6b90e42a653, type: 3}
+    dialogBoxSprite: {fileID: 7669455987791779220, guid: bbf55e4231037804db49b295bd04f9b1, type: 3}
+    dialogText: "\u041A\u0430\u043A\u043E\u0439 \u043C\u0438\u043B\u0430\u0448! \u041A\u0430\u043A \u0442\u0435\u0431\u044F \u0437\u043E\u0432\u0443\u0442?"
+  - characterSprite: {fileID: 2829232388215122354, guid: aeefdf49213eb6449a29c14125515503, type: 3}
+    dialogBoxSprite: {fileID: 2317827250201692963, guid: a8ada16681e5bcc4ab560ea723c0c69f, type: 3}
+    dialogText: "\u0424\u0438\u043D\u043D\u0438! \u0424\u0438\u043D\u043D\u0438! \u041D\u0438 \u0440\u0430 \u0444\u0430\u043D\u0430!"
+  - characterSprite: {fileID: 5225557550362909137, guid: 1fcf7df55f6c151499231ced553feb7c, type: 3}
+    dialogBoxSprite: {fileID: 7669455987791779220, guid: bbf55e4231037804db49b295bd04f9b1, type: 3}
+    dialogText: "\u0425\u043C... \u042F \u0442\u0435\u0431\u044F \u043D\u0435 \u043F\u043E\u043D\u0438\u043C\u0430\u044E, \u0431\u0443\u0434\u0443 \u043D\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0442\u043E\u0433\u0434\u0430 \u0424\u0438\u043D\u043D\u0438."
+  - characterSprite: {fileID: 2829232388215122354, guid: aeefdf49213eb6449a29c14125515503, type: 3}
+    dialogBoxSprite: {fileID: -1893984790920366816, guid: cf818e54eaf8307439572db41aaae226, type: 3}
+    dialogText: "\u0424\u0438\u043D\u043D\u0438..."
+  - characterSprite: {fileID: -6928365714507401850, guid: 26ae28c267663fd4b9140b73a6341530, type: 3}
+    dialogBoxSprite: {fileID: 7669455987791779220, guid: bbf55e4231037804db49b295bd04f9b1, type: 3}
+    dialogText: "\u0422\u0443\u0442 \u0431\u0443\u0434\u0435\u0442 \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0435\u043D\u0438\u0435, \u043D\u043E \u044F \u0435\u0449\u0451 \u043D\u0435 \u043F\u0440\u0438\u0434\u0443\u043C\u0430\u043B..."
+  mainPlayerPrefab: {fileID: 6976882751313341239, guid: e8242db111c19c741b0b7be63fedc117, type: 3}
+  characterBasePrefab: {fileID: 3762410605094613526, guid: 4f29f11aac177f44dae111e52f9e8775, type: 3}
+  spawnPointPlayer: {fileID: 0}
+  spawnPointCustomNPC: {fileID: 0}
