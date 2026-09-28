@@ -5,7 +5,8 @@ public class AppBootstrapper : MonoBehaviour
 {
     void Start()
     {
-        // ВНИМАНИЕ: Напишите сюда точное имя сцены, где выбирают персонажа (как в иерархии)
+        // ВНИМАНИЕ: Здесь должно быть имя вашей главной сцены, 
+        // где висит GameFlowManager, пролог и кастомизация!
         SceneManager.LoadScene("SampleScene"); 
     }
 }

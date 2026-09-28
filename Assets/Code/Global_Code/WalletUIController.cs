@@ -6,8 +6,8 @@ public class WalletUIController : MonoBehaviour
     public static WalletUIController Instance { get; private set; }
 
     [Header("Главные элементы")]
-    public TextMeshProUGUI totalMoneyText;
     public GameObject expandedRibbon;
+    public TextMeshProUGUI totalMoneyText;
 
     [Header("Тексты копилок")]
     public TextMeshProUGUI mandatoryText;
@@ -27,6 +27,7 @@ public class WalletUIController : MonoBehaviour
     [Tooltip("Смещение окна вверх относительно центра свинки")]
     public float yOffset = 250f; 
 
+    private Canvas myCanvas; 
     private bool isExpanded = false;
 
     void Awake()
@@ -37,13 +38,19 @@ public class WalletUIController : MonoBehaviour
             return;
         }
         Instance = this;
+        myCanvas = GetComponent<Canvas>();
     }
 
     void Start()
     {
-        // На всякий случай гарантированно выключаем окно при старте
         if (scrollWindowPopup != null) scrollWindowPopup.gameObject.SetActive(false);
         UpdateUI();
+
+        // ИСПРАВЛЕНИЕ: Выключаем только ВИДИМОСТЬ холста, а не сам объект!
+        if (myCanvas != null)
+        {
+            myCanvas.enabled = false; 
+        }
     }
 
     public void UpdateUI()
@@ -61,7 +68,6 @@ public class WalletUIController : MonoBehaviour
         isExpanded = !isExpanded;
         expandedRibbon.SetActive(isExpanded);
         
-        // Если закрываем ленту — закрываем и попап с деньгами
         if (!isExpanded && scrollWindowPopup != null) 
         {
             scrollWindowPopup.gameObject.SetActive(false);
@@ -74,9 +80,7 @@ public class WalletUIController : MonoBehaviour
     {
         if (scrollWindowPopup == null) return;
 
-        // Включаем окно
         scrollWindowPopup.gameObject.SetActive(true);
-
         RectTransform targetButton = null;
 
         switch (bankType.ToLower())
@@ -97,15 +101,13 @@ public class WalletUIController : MonoBehaviour
 
         if (targetButton != null)
         {
-            // Используем transform.position вместо anchoredPosition. 
-            // Это заставит UI встать ровно по центру свинки на любом экране!
             scrollWindowPopup.position = targetButton.position;
-            
-            // А теперь сдвигаем локально вверх с помощью настраиваемого ползунка yOffset
             Vector3 localPos = scrollWindowPopup.localPosition;
             localPos.y += yOffset; 
             scrollWindowPopup.localPosition = localPos;
         }
+
+        PiggyBankContentManager.Instance?.RefreshScrollViewUI(bankType);
     }
 
     public void ClosePopup()
