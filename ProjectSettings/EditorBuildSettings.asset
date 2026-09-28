@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SupermarketScene.unity
     guid: aea67faf89817db4ab0c2c55ec45759a
+  - enabled: 1
+    path: Assets/Scenes/MoneyDistributionScene.unity
+    guid: 6f17bb75f9b31fe4b9b1b5119f22a577
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

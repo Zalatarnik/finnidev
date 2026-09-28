@@ -2,26 +2,30 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using TMPro; // Подключаем библиотеку для нового текста (TextMeshPro)
+using TMPro;
 
-// === СТРУКТУРА ДЛЯ ВИЗУАЛЬНОЙ НОВЕЛЛЫ ===
 [System.Serializable]
 public struct DialogLine
 {
-    public Sprite characterSprite; // Спрайт персонажа (эмоция) для фразы
-    public Sprite dialogBoxSprite; // Спрайт подложки текста для фразы
+    public Sprite characterSprite; 
+    public Sprite dialogBoxSprite; 
     [TextArea(3, 5)]
-    public string dialogText;      // Сам текст фразы
+    public string dialogText;      
 }
 
 public class GameFlowManager : MonoBehaviour
 {
+    public static bool isProloguePassed = false;
+
     [Header("UI Panels")]
     public GameObject characterSelectPanel;
     public GameObject prologuePanel;
-    public GameObject dialogPanel; // Панель визуальной новеллы
+    public GameObject dialogPanel; 
     public GameObject gamePanel;
     public GameObject locationSelectPanel;
+
+    [Header("Mom Gift Settings")]
+    public GameObject momGiftNotificationPanel; 
 
     [Header("UI Customization Layers")]
     public Image bodyLayerDisplay;
@@ -34,8 +38,8 @@ public class GameFlowManager : MonoBehaviour
     public Sprite[] hornsSprites;
 
     [Header("Prologue Settings (Transitions)")]
-    public RectTransform currentImageRect; // Для эффекта сдвига
-    public RectTransform nextImageRect;    // Для эффекта сдвига
+    public RectTransform currentImageRect; 
+    public RectTransform nextImageRect;    
     public Sprite[] prologueSprites;
     public float timePerImage = 3f;
     public float transitionDuration = 0.8f;
@@ -46,7 +50,7 @@ public class GameFlowManager : MonoBehaviour
     public CanvasGroup textCanvasGroup;
     public Image textImageComponent;
     public Sprite[] textSprites;
-    public RectTransform[] textTemplates; // Шаблоны позиций текста
+    public RectTransform[] textTemplates; 
     public float textFlyDuration = 0.5f;
 
     [Header("Visual Novel (Dialog) Settings")]
@@ -78,16 +82,21 @@ public class GameFlowManager : MonoBehaviour
 
     void Start()
     {
-        // Инициализация стартовых панелей
-        characterSelectPanel.SetActive(true);
-        prologuePanel.SetActive(false);
+        if (isProloguePassed)
+        {
+            StartGame();
+            return; 
+        }
+
+        if (prologuePanel != null) prologuePanel.SetActive(true);
+        if (characterSelectPanel != null) characterSelectPanel.SetActive(false);
         if (dialogPanel != null) dialogPanel.SetActive(false);
-        gamePanel.SetActive(false);
+        if (gamePanel != null) gamePanel.SetActive(false);
         if (locationSelectPanel != null) locationSelectPanel.SetActive(false);
+        if (momGiftNotificationPanel != null) momGiftNotificationPanel.SetActive(false);
 
         UpdateCustomizerUI();
 
-        // Инициализация компонентов пролога
         if (currentImageRect != null && nextImageRect != null)
         {
             currentImg = currentImageRect.GetComponent<Image>();
@@ -103,15 +112,18 @@ public class GameFlowManager : MonoBehaviour
             textCanvasGroup.alpha = 0f;
         }
 
-        // Прячем шаблоны текста при старте игры
         if (textTemplates != null)
         {
             foreach (var template in textTemplates)
                 if (template != null) template.gameObject.SetActive(false);
         }
+
+        if (prologueSprites.Length > 0)
+        {
+            prologueCoroutine = StartCoroutine(PlayPrologue());
+        }
     }
 
-    // ================= КАСТОМИЗАЦИЯ =================
     public void NextBody() { currentBodyIndex = (currentBodyIndex + 1) % bodySprites.Length; UpdateCustomizerUI(); }
     public void PreviousBody() { currentBodyIndex = (currentBodyIndex - 1 + bodySprites.Length) % bodySprites.Length; UpdateCustomizerUI(); }
     public void NextClothing() { currentClothingIndex = (currentClothingIndex + 1) % clothingSprites.Length; UpdateCustomizerUI(); }
@@ -128,15 +140,13 @@ public class GameFlowManager : MonoBehaviour
 
     public void ConfirmSelection()
     {
-        characterSelectPanel.SetActive(false);
-        prologuePanel.SetActive(true);
-        prologueCoroutine = StartCoroutine(PlayPrologue());
+        if (characterSelectPanel != null) characterSelectPanel.SetActive(false);
+        StartVisualNovel();
     }
 
-    // ================= ПРОЛОГ (КОМИКС) =================
-    private IEnumerator PlayPrologue()
+    private System.Collections.IEnumerator PlayPrologue()
     {
-        if (prologueSprites.Length == 0) { StartVisualNovel(); yield break; }
+        if (prologueSprites.Length == 0) { StartCharacterCustomization(); yield break; }
 
         currentImg.sprite = prologueSprites[0];
         ResetImageTransform(currentImageRect);
@@ -167,7 +177,6 @@ public class GameFlowManager : MonoBehaviour
             nextImg.sprite = prologueSprites[i];
             float elapsed = 0f;
 
-            // Теперь ВСЕ картинки (включая 5-ю) стартуют справа
             nextImageRect.anchoredPosition = new Vector2(slideDistance, 0);
             nextCanvasGroup.alpha = 0f;
 
@@ -176,7 +185,6 @@ public class GameFlowManager : MonoBehaviour
                 elapsed += Time.deltaTime;
                 float smoothT = Mathf.SmoothStep(0f, 1f, elapsed / transitionDuration);
 
-                // Горизонтальное движение и искажение только по оси X (как у всех)
                 currentImageRect.anchoredPosition = new Vector2(-slideDistance * smoothT, 0);
                 nextImageRect.anchoredPosition = new Vector2(slideDistance * (1f - smoothT), 0);
 
@@ -197,7 +205,7 @@ public class GameFlowManager : MonoBehaviour
             yield return new WaitForSeconds(timePerImage);
         }
 
-        StartVisualNovel();
+        StartCharacterCustomization();
     }
 
     private void ResetImageTransform(RectTransform rect)
@@ -206,7 +214,7 @@ public class GameFlowManager : MonoBehaviour
         rect.localScale = Vector3.one;
     }
 
-    private IEnumerator AnimateTextIn(int index)
+    private System.Collections.IEnumerator AnimateTextIn(int index)
     {
         if (textSprites != null && index < textSprites.Length && textSprites[index] != null && textCanvasGroup != null)
         {
@@ -249,19 +257,22 @@ public class GameFlowManager : MonoBehaviour
     public void SkipPrologue()
     {
         if (prologueCoroutine != null) StopCoroutine(prologueCoroutine);
-        // Пропуск пролога кидает сразу в новеллу
-        StartVisualNovel();
+        StartCharacterCustomization();
     }
 
-    // ================= ВИЗУАЛЬНАЯ НОВЕЛЛА =================
+    private void StartCharacterCustomization()
+    {
+        if (prologuePanel != null) prologuePanel.SetActive(false);
+        if (characterSelectPanel != null) characterSelectPanel.SetActive(true);
+    }
+
     private void StartVisualNovel()
     {
-        // Закомментируйте строку ниже (добавьте //), если хотите чтобы последний слайд комикса остался затемненным фоном для диалога
-        prologuePanel.SetActive(false); 
+        if (characterSelectPanel != null) characterSelectPanel.SetActive(false); 
 
         if (dialogLines == null || dialogLines.Length == 0 || dialogPanel == null)
         {
-            StartGame();
+            ShowMomGiftNotification();
             return;
         }
 
@@ -274,7 +285,6 @@ public class GameFlowManager : MonoBehaviour
     {
         DialogLine currentLine = dialogLines[currentDialogIndex];
 
-        // Меняем персонажа
         if (currentLine.characterSprite != null && dialogCharacterImage != null)
         {
             dialogCharacterImage.gameObject.SetActive(true);
@@ -285,7 +295,6 @@ public class GameFlowManager : MonoBehaviour
             dialogCharacterImage.gameObject.SetActive(false);
         }
 
-        // Меняем подложку
         if (dialogBoxImage != null && currentLine.dialogBoxSprite != null)
         {
             dialogBoxImage.sprite = currentLine.dialogBoxSprite;
@@ -297,7 +306,7 @@ public class GameFlowManager : MonoBehaviour
             typingCoroutine = StartCoroutine(TypeText(currentLine.dialogText));
     }
 
-    private IEnumerator TypeText(string textToType)
+    private System.Collections.IEnumerator TypeText(string textToType)
     {
         isTyping = true;
         dialogTextComponent.text = "";
@@ -311,7 +320,6 @@ public class GameFlowManager : MonoBehaviour
         isTyping = false;
     }
 
-    // Эта функция вызывается прозрачной кнопкой "NextButton" во время диалога
     public void OnDialogNextButtonClicked()
     {
         if (isTyping)
@@ -329,17 +337,40 @@ public class GameFlowManager : MonoBehaviour
             }
             else
             {
-                StartGame();
+                ShowMomGiftNotification();
             }
         }
     }
 
-    // ================= СТАРТ ИГРЫ И СПАВН ПЕРСОНАЖЕЙ =================
+    private void ShowMomGiftNotification()
+    {
+        if (dialogPanel != null) dialogPanel.SetActive(false);
+        if (momGiftNotificationPanel != null) momGiftNotificationPanel.SetActive(true);
+    }
+
+    public void OnTakeMoneyButtonClicked()
+    {
+        if (momGiftNotificationPanel != null) momGiftNotificationPanel.SetActive(false);
+        
+        isProloguePassed = true; 
+
+        if (WalletUIController.Instance != null)
+        {
+            Canvas walletCanvas = WalletUIController.Instance.GetComponent<Canvas>();
+            if (walletCanvas != null) walletCanvas.enabled = true;
+        }
+
+        SceneManager.LoadScene("MoneyDistributionScene");
+    }
+
     private void StartGame()
     {
-        prologuePanel.SetActive(false);
+        if (prologuePanel != null) prologuePanel.SetActive(false);
+        if (characterSelectPanel != null) characterSelectPanel.SetActive(false);
         if (dialogPanel != null) dialogPanel.SetActive(false);
-        gamePanel.SetActive(true);
+        if (momGiftNotificationPanel != null) momGiftNotificationPanel.SetActive(false);
+        
+        if (gamePanel != null) gamePanel.SetActive(true);
 
         if (mainPlayerPrefab != null && spawnPointPlayer != null)
         {
@@ -368,42 +399,10 @@ public class GameFlowManager : MonoBehaviour
         }
     }
 
-    // ================= НАВИГАЦИЯ ПО ЛОКАЦИЯМ =================
-    public void OpenLocationPanel()
-    {
-        if (locationSelectPanel != null) locationSelectPanel.SetActive(true);
-    }
-
-    public void CloseLocationPanel()
-    {
-        if (locationSelectPanel != null) locationSelectPanel.SetActive(false);
-    }
-
-    public void GoToSupermarket()
-    {
-        Debug.Log("Загрузка: Супермаркет");
-        CloseLocationPanel();
-        SceneManager.LoadScene("SupermarketScene");
-    }
-
-    public void GoToSchool()
-    {
-        Debug.Log("Загрузка: Школа");
-        CloseLocationPanel();
-        SceneManager.LoadScene("SchoolScene");
-    }
-
-    public void GoToYard()
-    {
-        Debug.Log("Загрузка: Двор");
-        CloseLocationPanel();
-        SceneManager.LoadScene("YardScene");
-    }
-
-    public void GoToDevRoom()
-    {
-        Debug.Log("Загрузка: Комната разработчика (Все мини-игры)");
-        CloseLocationPanel();
-        SceneManager.LoadScene("DevRoomScene");
-    }
+    public void OpenLocationPanel() { if (locationSelectPanel != null) locationSelectPanel.SetActive(true); }
+    public void CloseLocationPanel() { if (locationSelectPanel != null) locationSelectPanel.SetActive(false); }
+    public void GoToSupermarket() { CloseLocationPanel(); SceneManager.LoadScene("SupermarketScene"); }
+    public void GoToSchool() { CloseLocationPanel(); SceneManager.LoadScene("SchoolScene"); }
+    public void GoToYard() { CloseLocationPanel(); SceneManager.LoadScene("YardScene"); }
+    public void GoToDevRoom() { CloseLocationPanel(); SceneManager.LoadScene("DevRoomScene"); }
 }

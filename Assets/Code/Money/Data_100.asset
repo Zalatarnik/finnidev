@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808c98d5572d4e444b603cbe386cdc6d, type: 3}
+  m_Name: Data_100
+  m_EditorClassIdentifier: Assembly-CSharp::MoneyData
+  nominal: 100
+  isCoin: 0
+  spriteSingle: {fileID: 3202951470919861541, guid: cde3a983022a68144a1c1e680b330fca, type: 3}
+  spriteDouble: {fileID: -399461421905429175, guid: cde3a983022a68144a1c1e680b330fca, type: 3}
+  spriteSmallStack: {fileID: 8361328403726968439, guid: 634f9f406f8168b459c9e19d1a31d79b, type: 3}
+  spriteBigStack: {fileID: 7266123946356534895, guid: 634f9f406f8168b459c9e19d1a31d79b, type: 3}
