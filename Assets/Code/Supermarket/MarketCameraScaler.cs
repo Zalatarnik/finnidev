@@ -81,8 +81,6 @@ public class WorldCameraController : MonoBehaviour
 
         Vector2 mousePosition = Mouse.current.position.ReadValue();
 
-        // Не обрабатываем мышь, если она физически находится
-        // за пределами Game View.
         if (!IsScreenPositionValid(mousePosition))
         {
             isMousePanning = false;
@@ -141,7 +139,6 @@ public class WorldCameraController : MonoBehaviour
             }
         }
 
-        // Два пальца = масштабирование.
         if (firstTouchIndex != -1 && secondTouchIndex != -1)
         {
             activeTouchId = -1;

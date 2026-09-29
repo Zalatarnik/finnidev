@@ -22,9 +22,6 @@ public class MoneyManager : MonoBehaviour
             return;
         }
         Instance = this;
-        
-        // Так как скрипт находится на объекте Managers внутри [GLOBAL_SYSTEMS],
-        // мы делаем бессмертным САМЫЙ КОРНЕВОЙ объект всей системы.
         DontDestroyOnLoad(transform.root.gameObject); 
     }
 

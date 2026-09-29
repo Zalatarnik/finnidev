@@ -8,9 +8,8 @@ public Sprite productSprite;
 public float basePrice; 
 
 [Range(0, 100)]
-public int currentDiscount = 0; // Скидка в процентах (задается кодом или вручную)
+public int currentDiscount = 0;
 
-// Вычисление финальной цены с учетом скидки
 public float GetFinalPrice()
 {
 if (currentDiscount <= 0) return basePrice;

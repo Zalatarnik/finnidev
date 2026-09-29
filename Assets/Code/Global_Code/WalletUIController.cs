@@ -46,7 +46,6 @@ public class WalletUIController : MonoBehaviour
         if (scrollWindowPopup != null) scrollWindowPopup.gameObject.SetActive(false);
         UpdateUI();
 
-        // ИСПРАВЛЕНИЕ: Выключаем только ВИДИМОСТЬ холста, а не сам объект!
         if (myCanvas != null)
         {
             myCanvas.enabled = false; 
@@ -57,11 +56,12 @@ public class WalletUIController : MonoBehaviour
     {
         if (MoneyManager.Instance == null) return;
 
-        totalMoneyText.text = $"{MoneyManager.Instance.TotalMoney} руб.";
-        mandatoryText.text = $"Обязательные\n{MoneyManager.Instance.MandatoryMoney} руб.";
-        optionalText.text = $"Необязательные\n{MoneyManager.Instance.OptionalMoney} руб.";
-        dreamText.text = $"Мечта\n{MoneyManager.Instance.DreamMoney} руб.";
+        totalMoneyText.text = $"{MoneyManager.Instance.TotalMoney} денег";
+        mandatoryText.text = $"Обязательные\n{MoneyManager.Instance.MandatoryMoney} денег";
+        optionalText.text = $"Необязательные\n{MoneyManager.Instance.OptionalMoney} денег";
+        dreamText.text = $"Мечта\n{MoneyManager.Instance.DreamMoney} денег";
     }
+
 
     public void ToggleRibbon()
     {

@@ -210,13 +210,11 @@ public class SupermarketManager : MonoBehaviour
         productsOnCounter.Add(productToBuy);
         UpdateMonitor();
 
-        // Создаём копию товара для стола.
         GameObject counterClone = new GameObject("CounterProduct");
 
         counterClone.transform.position = shelfItem.transform.position;
         counterClone.transform.rotation = shelfItem.transform.rotation;
 
-        // Сохраняем масштаб товара с полки.
         counterClone.transform.localScale = shelfItem.transform.localScale;
 
         SpriteRenderer sr = counterClone.AddComponent<SpriteRenderer>();
@@ -230,13 +228,11 @@ public class SupermarketManager : MonoBehaviour
         PolygonCollider2D collider = counterClone.AddComponent<PolygonCollider2D>();
         collider.isTrigger = false;
 
-        // Добавляем возможность снова перетаскивать товар со стола.
         PhysicsDragAndDrop drag = counterClone.AddComponent<PhysicsDragAndDrop>();
         drag.currentProduct = productToBuy;
         drag.isOnCounter = true;
         drag.SetStartPosition(counterClone.transform.position);
 
-        // Возвращаем исходный физический объект на полку.
         shelfItem.ResetToShelfPosition();
 
         UpdateAllShelves();

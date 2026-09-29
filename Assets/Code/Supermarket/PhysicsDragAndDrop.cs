@@ -65,10 +65,8 @@ public class PhysicsDragAndDrop : MonoBehaviour, IPointerDownHandler, IDragHandl
         if (mainCam == null)
             return;
 
-        // Луч из камеры через позицию мыши/пальца.
         Ray ray = mainCam.ScreenPointToRay(eventData.position);
 
-        // Плоскость, на которой находится 2D-товар.
         Plane dragPlane = new Plane(
             Vector3.forward,
             new Vector3(0f, 0f, transform.position.z)
@@ -79,7 +77,6 @@ public class PhysicsDragAndDrop : MonoBehaviour, IPointerDownHandler, IDragHandl
 
         Vector3 worldPosition = ray.GetPoint(distance);
 
-        // Для 2D сохраняем исходный Z.
         worldPosition.z = transform.position.z;
 
         if (rb != null)
